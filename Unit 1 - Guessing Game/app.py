@@ -1,13 +1,11 @@
 import random
-import statistics
-
+import statistics as st
 
 def start_game():
     ## Pre reqs ##
     answer = random.randint(1, 100)
     total = []
     count = 0
-
     ### Game Starts ###
     print(
         """
@@ -24,11 +22,13 @@ def start_game():
         ### Error try block ###
         try:
             guess = int(guess)
-            if guess not in range(1,100):
+            if guess not in range(1,101):
+                count += 0
                 raise ValueError
         except ValueError as err:
-            err = print("\nPlease enter a number that is between 1 and 100, try again")
-            start_game()
+            err = print("Please enter a number that is between 1 and 100, try again\n"
+                        "\nThis does not count towards your attempts, mistakes happen :)")
+            continue
 
         ### Guess conditions ###
         if guess > answer:
@@ -42,19 +42,22 @@ def start_game():
             print(f"Well done you made {count} attempt(s) this time!\n")
 
 
-            confirm = input("Would you like to play again? Anything you say that is not 'Yes' will end the game.\n")
+
+            confirm = input("Would you like to play again? Anything said other than 'Yes' will end the game.\n")
             if confirm == "yes":
-                start_game()
+                total.append(count)
+                next_answer = random.randint(1, 100)
+                answer = next_answer
+                continue
             else:
                 total.append(count)
-                print("Here is your overall stats after this game!"
-                      f"\nTotal Attempts: {total[0:]} \nAverage Score: \n"
-                      "\nThank you for playing! Goodbye!")
-
-            break
-
-
-
+                print(
+                    f"""
+                    \nThanks for playing! Here is some stats for you.
+                    
+                    \nTotal Attempts: {sum(total)} \nAverage Attempts: {st.mean(total)}
+                    """)
+                break
 
 
 start_game()
