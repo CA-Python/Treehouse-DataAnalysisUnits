@@ -58,10 +58,10 @@ def start_game():
                 if count < highscore[0]:
                     highscore.pop(0)
                     highscore.append(count)
-                    print(highscore)
                 count = 0
                 next_answer = random.randint(1, 100)
                 answer = next_answer
+                print(f"The current highscore is {highscore[0]}! You got this!")
                 continue
             else:
                 total.append(count)
